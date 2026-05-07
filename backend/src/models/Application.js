@@ -1,22 +1,19 @@
-const mongoose = require("mongoose");
-const { applicationStatuses } = require("../config/constants");
 
-const applicationTimelineSchema = new mongoose.Schema(
+const mongoose = require("mongoose");
+
+const timelineSchema = new mongoose.Schema(
   {
     status: {
       type: String,
-      enum: applicationStatuses,
       required: true,
+      trim: true,
     },
-    note: {
+    message: {
       type: String,
-      default: "",
+      required: true,
+      trim: true,
     },
-    changedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-    },
-    changedAt: {
+    createdAt: {
       type: Date,
       default: Date.now,
     },
@@ -30,45 +27,41 @@ const applicationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       required: true,
-      index: true,
     },
     program: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Program",
       required: true,
-      index: true,
-    },
-    university: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "University",
-      required: true,
-      index: true,
-    },
-    destinationCountry: {
-      type: String,
-      required: true,
-      index: true,
     },
     intake: {
       type: String,
       required: true,
-      index: true,
+      trim: true,
+    },
+    note: {
+      type: String,
+      default: "",
+      trim: true,
     },
     status: {
       type: String,
-      enum: applicationStatuses,
-      default: "draft",
-      index: true,
+      enum: ["draft", "submitted", "under-review", "approved", "rejected"],
+      default: "submitted",
+    },
+    source: {
+      type: String,
+      default: "student-panel",
+    },
+    forwardedTo: {
+      type: String,
+      default: "counselor-panel",
     },
     timeline: {
-      type: [applicationTimelineSchema],
-      default: [{ status: "draft", note: "Application created." }],
+      type: [timelineSchema],
+      default: [],
     },
   },
   { timestamps: true }
 );
-
-applicationSchema.index({ student: 1, program: 1, intake: 1 }, { unique: true });
-applicationSchema.index({ student: 1, status: 1, createdAt: -1 });
 
 module.exports = mongoose.model("Application", applicationSchema);

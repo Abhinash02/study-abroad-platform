@@ -1,37 +1,27 @@
+const asyncHandler = require("../utils/asyncHandler");
 const Application = require("../models/Application");
 const Program = require("../models/Program");
-const asyncHandler = require("../utils/asyncHandler");
-const HttpError = require("../utils/httpError");
-const { successResponse } = require("../utils/apiResponse");
-const { validStatusTransitions } = require("../config/constants");
-
-const listApplications = asyncHandler(async (req, res) => {
-  const { studentId, status } = req.query;
-  const filters = {};
-
-  if (studentId) filters.student = studentId;
-  if (status) filters.status = status;
-
-  const applications = await Application.find(filters)
-    .populate("student", "fullName email role")
-    .populate("program", "title degreeLevel tuitionFeeUsd intakes")
-    .populate("university", "name country city")
-    .sort({ createdAt: -1 })
-    .lean();
-
-  return successResponse(res, applications, "Applications fetched successfully.");
-});
 
 const createApplication = asyncHandler(async (req, res) => {
+  const application = await Application.create(req.body);
+
+  return res.status(201).json({
+    success: true,
+    message: "Application created successfully",
+    data: application,
+  });
+});
+
+const applyProgram = asyncHandler(async (req, res) => {
   const { studentId, programId, intake, note } = req.body;
 
-  const program = await Program.findById(programId).lean();
-  if (!program) {
-    throw new HttpError(404, "Program not found.");
-  }
+  const program = await Program.findById(programId);
 
-  if (!program.intakes.includes(intake)) {
-    throw new HttpError(400, "Selected intake is not available for this program.");
+  if (!program) {
+    return res.status(404).json({
+      success: false,
+      message: "Program not found",
+    });
   }
 
   const existingApplication = await Application.findOne({
@@ -41,72 +31,109 @@ const createApplication = asyncHandler(async (req, res) => {
   });
 
   if (existingApplication) {
-    throw new HttpError(
-      409,
-      "Duplicate application is not allowed for the same program and intake."
-    );
+    return res.status(409).json({
+      success: false,
+      message: "You have already applied to this program for this intake.",
+    });
   }
 
   const application = await Application.create({
     student: studentId,
     program: programId,
-    university: program.university,
-    destinationCountry: program.country,
     intake,
-    status: "draft",
+    note: note || "Application started from dashboard.",
+    status: "submitted",
+    source: "student-panel",
+    forwardedTo: "counselor-panel",
     timeline: [
       {
         status: "draft",
-        note: note || "Application created by student.",
-        changedBy: req.user?._id,
+        message: "Application created by student.",
+      },
+      {
+        status: "submitted",
+        message: "Application submitted.",
       },
     ],
   });
 
-  const populated = await Application.findById(application._id)
-    .populate("student", "fullName email role")
-    .populate("program", "title degreeLevel tuitionFeeUsd")
-    .populate("university", "name country city");
+  const populatedApplication = await Application.findById(application._id).populate("student program");
 
-  return successResponse(res, populated, "Application created successfully.");
+  return res.status(201).json({
+    success: true,
+    message: "Program application submitted successfully",
+    data: populatedApplication,
+  });
 });
 
-const updateApplicationStatus = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { status, note } = req.body;
+const getApplications = asyncHandler(async (req, res) => {
+  const applications = await Application.find()
+    .populate("student program")
+    .sort({ createdAt: -1 });
 
-  const application = await Application.findById(id);
-  if (!application) {
-    throw new HttpError(404, "Application not found.");
-  }
-
-  const allowed = validStatusTransitions[application.status] || [];
-  if (!allowed.includes(status)) {
-    throw new HttpError(
-      400,
-      `Invalid status transition from ${application.status} to ${status}.`
-    );
-  }
-
-  application.status = status;
-  application.timeline.push({
-    status,
-    note: note || `Status updated to ${status}.`,
-    changedBy: req.user?._id,
+  return res.status(200).json({
+    success: true,
+    data: applications,
   });
+});
 
-  await application.save();
+const getApplicationById = asyncHandler(async (req, res) => {
+  const application = await Application.findById(req.params.id).populate("student program");
 
-  const populated = await Application.findById(application._id)
-    .populate("student", "fullName email role")
-    .populate("program", "title degreeLevel tuitionFeeUsd")
-    .populate("university", "name country city");
+  if (!application) {
+    return res.status(404).json({
+      success: false,
+      message: "Application not found",
+    });
+  }
 
-  return successResponse(res, populated, "Application status updated successfully.");
+  return res.status(200).json({
+    success: true,
+    data: application,
+  });
+});
+
+const updateApplication = asyncHandler(async (req, res) => {
+  const application = await Application.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  }).populate("student program");
+
+  if (!application) {
+    return res.status(404).json({
+      success: false,
+      message: "Application not found",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Application updated successfully",
+    data: application,
+  });
+});
+
+const deleteApplication = asyncHandler(async (req, res) => {
+  const application = await Application.findByIdAndDelete(req.params.id);
+
+  if (!application) {
+    return res.status(404).json({
+      success: false,
+      message: "Application not found",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Application deleted successfully",
+  });
 });
 
 module.exports = {
-  listApplications,
   createApplication,
-  updateApplicationStatus,
+  applyProgram,
+  getApplications,
+  getApplicationById,
+  updateApplication,
+  deleteApplication,
 };

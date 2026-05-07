@@ -37,7 +37,7 @@ module.exports = {
   programs: [
     {
       universityName: "University of Windsor",
-      university: null, // Will be mapped in seed.js
+      university: null, 
       country: "Canada",
       city: "Windsor",
       title: "Master of Applied Computing",
@@ -48,6 +48,21 @@ module.exports = {
       durationMonths: 16,
       minimumIelts: 6.5,
       scholarshipAvailable: false,
+      stem: true
+    },
+    {
+      universityName: "University of Windsor",
+      university: null, 
+      country: "Australia",
+      city: "Melbourne",
+      title: "Master of Computer Applications",
+      field: "Computer Science",
+      degreeLevel: "master",
+      tuitionFeeUsd: 25000,
+      intakes: ["September", "May"],
+      durationMonths: 16,
+      minimumIelts: 8.5,
+      scholarshipAvailable: true,
       stem: true
     },
     {
@@ -64,7 +79,23 @@ module.exports = {
       minimumIelts: 6.0,
       scholarshipAvailable: true,
       stem: true
+    },
+    {
+      universityName: "University of Portsmouth",
+      university: null,
+      country: "Hong Kong",
+      city: "Portsmouth",
+      title: "MSc Machine Learning",
+      field: "Computer Science",
+      degreeLevel: "master",
+      tuitionFeeUsd: 12000,
+      intakes: ["September", "January"],
+      durationMonths: 24,
+      minimumIelts: 6.0,
+      scholarshipAvailable: true,
+      stem: true
     }
+
   ],
   students: [
     {

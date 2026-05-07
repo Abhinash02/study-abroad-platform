@@ -1,93 +1,3 @@
-// const asyncHandler = require("../utils/asyncHandler");
-// const { successResponse } = require("../utils/apiResponse");
-// const { registerUser, loginUser } = require("../services/auth.service");
-// const { signToken } = require("../utils/jwt");
-// const sanitizeUser = require("../utils/sanitizeUser");
-
-// const register = asyncHandler(async (req, res) => {
-//   const user = await registerUser(req.body);
-//   const token = signToken(user);
-
-//   return successResponse(
-//     res,
-//     {
-//       user: sanitizeUser(user),
-//       token,
-//     },
-//     "Registration successful."
-//   );
-// });
-
-// const login = asyncHandler(async (req, res) => {
-//   const user = await loginUser(req.body.email, req.body.password);
-//   const token = signToken(user);
-
-//   return successResponse(
-//     res,
-//     {
-//       user: sanitizeUser(user),
-//       token,
-//     },
-//     "Login successful."
-//   );
-// });
-
-// const me = asyncHandler(async (req, res) => {
-//   return successResponse(res, sanitizeUser(req.user), "Authenticated user profile fetched.");
-// });
-
-// module.exports = {
-//   register,
-//   login,
-//   me,
-// };
-
-
-
-// const asyncHandler = require("../utils/asyncHandler");
-// const { successResponse } = require("../utils/apiResponse");
-// const { registerUser, loginUser } = require("../services/auth.service");
-// const { signToken } = require("../utils/jwt");
-// const sanitizeUser = require("../utils/sanitizeUser");
-
-// const register = asyncHandler(async (req, res) => {
-//   const user = await registerUser(req.body);
-//   const token = signToken(user);
-
-//   return successResponse(
-//     res,
-//     {
-//       user: sanitizeUser(user),
-//       token,
-//     },
-//     "Registration successful."
-//   );
-// });
-
-// const login = asyncHandler(async (req, res) => {
-//   const user = await loginUser(req.body.email, req.body.password);
-//   const token = signToken(user);
-
-//   return successResponse(
-//     res,
-//     {
-//       user: sanitizeUser(user),
-//       token,
-//     },
-//     "Login successful."
-//   );
-// });
-
-// const me = asyncHandler(async (req, res) => {
-//   return successResponse(res, sanitizeUser(req.user), "Authenticated user profile fetched.");
-// });
-
-// module.exports = {
-//   register,
-//   login,
-//   me,
-// };
-
 const asyncHandler = require("../utils/asyncHandler");
 const { successResponse } = require("../utils/apiResponse");
 const { registerUser, loginUser } = require("../services/auth.service");
@@ -183,3 +93,9 @@ module.exports = {
   me,
   updateProfile,
 };
+
+
+
+
+
+

@@ -1,39 +1,16 @@
-// const express = require("express");
-// const { register, login, me } = require("../controllers/authController");
-// const { requireAuth } = require("../middleware/authMiddleware");
-// const { authRateLimiter } = require("../middleware/rateLimiter");
-
-// const router = express.Router();
-
-// router.post("/register", authRateLimiter, register);
-// router.post("/login", authRateLimiter, login);
-// router.get("/me", requireAuth, me);
-
-// module.exports = router;
-
-// const express = require("express");
-// const { register, login, me } = require("../controllers/auth.controller");
-// const { requireAuth } = require("../middleware/auth.middleware");
-// const { authRateLimiter } = require("../middleware/rateLimiter");
-
-// const router = express.Router();
-
-// router.post("/register", authRateLimiter, register);
-// router.post("/login", authRateLimiter, login);
-// router.get("/me", requireAuth, me);
-
-// module.exports = router;
-
 const express = require("express");
-const { register, login, me, updateProfile } = require("../controllers/auth.controller");
-const { requireAuth } = require("../middleware/auth.middleware");
-const { authRateLimiter } = require("../middleware/rateLimiter");
-
 const router = express.Router();
 
-router.post("/register", authRateLimiter, register);
-router.post("/login", authRateLimiter, login);
-router.get("/me", requireAuth, me);
-router.patch("/me", requireAuth, updateProfile);
+const authController = require("../controllers/auth.controller");
+const { requireAuth } = require("../middleware/auth.middleware");
+const {
+  registerValidation,
+  loginValidation,
+} = require("../validations/auth.validation");
+
+router.post("/register", registerValidation, authController.register);
+router.post("/login", loginValidation, authController.login);
+router.get("/me", requireAuth, authController.me);
+router.patch("/me", requireAuth, authController.updateProfile);
 
 module.exports = router;

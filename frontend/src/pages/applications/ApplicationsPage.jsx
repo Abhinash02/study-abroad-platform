@@ -1,74 +1,68 @@
 import { useEffect, useState } from "react";
 import AppShell from "../../components/layout/AppShell";
 import { getApplicationsApi } from "../../api/applicationApi";
-import { useAuth } from "../../hooks/useAuth";
-import ApplicationProgressCard from "../../components/cards/ApplicationProgressCard";
 
 export default function ApplicationsPage() {
-  const { user } = useAuth();
   const [applications, setApplications] = useState([]);
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const { data } = await getApplicationsApi({
-        studentId: user?.id,
-        ...(status ? { status } : {}),
-      });
-      setApplications(data.data);
+      const { data } = await getApplicationsApi();
+      setApplications(data.data || []);
     };
 
-    if (user?.id) fetchApplications();
-  }, [user, status]);
+    fetchApplications();
+  }, []);
 
   return (
     <AppShell>
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Application Progress</h2>
-          <p className="text-sm text-slate-500">
-            Track the full journey of each application through professional status timelines.
-          </p>
-        </div>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">My Applications</h2>
 
-        <div className="w-full md:w-64">
-          <label className="mb-2 block text-sm font-medium text-slate-700">
-            Filter by status
-          </label>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm"
+        {applications.map((application) => (
+          <div
+            key={application._id}
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
-            <option value="">All statuses</option>
-            <option value="draft">Draft</option>
-            <option value="submitted">Submitted</option>
-            <option value="under-review">Under review</option>
-            <option value="offer-received">Offer received</option>
-            <option value="visa-processing">Visa processing</option>
-            <option value="enrolled">Enrolled</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
-      </div>
+            <h3 className="text-lg font-semibold">
+              {application.program?.title || "Program not available"}
+            </h3>
 
-      {applications.length === 0 ? (
-        <div className="rounded-2xl bg-white p-8 text-center shadow-soft">
-          <h3 className="text-lg font-semibold text-slate-900">No applications found</h3>
-          <p className="mt-2 text-sm text-slate-500">
-            Start applying to programs and your progress timeline will appear here.
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {applications.map((application) => (
-            <ApplicationProgressCard
-              key={application._id}
-              application={application}
-            />
-          ))}
-        </div>
-      )}
+            <p className="mt-1 text-sm text-slate-600">
+              • {application.program?.country || "Country not available"} • Intake{" "}
+              {application.intake || "N/A"}
+            </p>
+
+            <p className="mt-3 inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+              {application.status || "submitted"}
+            </p>
+
+            <p className="mt-3 text-xs text-slate-500">
+              {application.createdAt
+                ? new Date(application.createdAt).toLocaleString()
+                : "No date available"}
+            </p>
+
+            {application.note ? (
+              <p className="mt-3 text-sm text-slate-700">{application.note}</p>
+            ) : null}
+
+            <div className="mt-4 space-y-2 border-t border-slate-100 pt-4">
+              {application.timeline?.map((item, index) => (
+                <div key={index} className="text-sm">
+                  <p className="font-medium text-slate-700">{item.status}</p>
+                  <p className="text-slate-600">{item.message}</p>
+                  <p className="text-xs text-slate-400">
+                    {item.createdAt
+                      ? new Date(item.createdAt).toLocaleString()
+                      : ""}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </AppShell>
   );
 }

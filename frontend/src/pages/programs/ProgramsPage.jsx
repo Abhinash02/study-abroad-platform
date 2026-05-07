@@ -1,56 +1,7 @@
-// import { useEffect, useState } from "react";
-// import AppShell from "../../components/layout/AppShell";
-// import { getProgramsApi } from "../../api/programApi";
-// import { createApplicationApi } from "../../api/applicationApi";
-// import ProgramCard from "../../components/cards/ProgramCard";
-// import { useAuth } from "../../hooks/useAuth";
-
-// export default function ProgramsPage() {
-//   const [programs, setPrograms] = useState([]);
-//   const { user } = useAuth();
-
-//   useEffect(() => {
-//     const fetchPrograms = async () => {
-//       const { data } = await getProgramsApi({ page: 1, limit: 12 });
-//       setPrograms(data.data);
-//     };
-//     fetchPrograms();
-//   }, []);
-
-//   const handleApply = async (program) => {
-//     const selectedIntake = program.intakes?.[0];
-//     await createApplicationApi({
-//       studentId: user.id,
-//       programId: program._id,
-//       intake: selectedIntake,
-//       note: "Application started from dashboard.",
-//     });
-//     alert("Application created successfully");
-//   };
-
-//   return (
-//     <AppShell>
-//       <div className="mb-6">
-//         <h2 className="text-2xl font-bold">Explore Programs</h2>
-//         <p className="text-sm text-slate-500">
-//           Filter tuition, intake, field, and degree level to find your fit.
-//         </p>
-//       </div>
-
-//       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-//         {programs.map((program) => (
-//           <ProgramCard key={program._id} program={program} onApply={handleApply} />
-//         ))}
-//       </div>
-//     </AppShell>
-//   );
-// }
-
-
 import { useEffect, useState } from "react";
 import AppShell from "../../components/layout/AppShell";
 import { getProgramsApi } from "../../api/programApi";
-import { createApplicationApi } from "../../api/applicationApi";
+import { createApplicationApi, applyProgramApi } from "../../api/applicationApi"; // ← add applyProgramApi
 import { compareProgramsApi } from "../../api/compareApi";
 import ProgramCard from "../../components/cards/ProgramCard";
 import CompareProgramsPanel from "../../components/compare/CompareProgramsPanel";
@@ -72,12 +23,15 @@ export default function ProgramsPage() {
 
   const handleApply = async (program) => {
     const selectedIntake = program.intakes?.[0];
-    await createApplicationApi({
+
+    // ✅ Use the new /apply route for student‑panel apply
+    await applyProgramApi({
       studentId: user.id,
       programId: program._id,
       intake: selectedIntake,
       note: "Application started from dashboard.",
     });
+
     alert("Application created successfully");
   };
 
