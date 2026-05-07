@@ -12,10 +12,10 @@
 const mongoose = require("mongoose");
 const env = require("./env");
 
-let isConnected = false;
-
 async function connectDatabase() {
-  if (isConnected) return;
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
 
   mongoose.set("strictQuery", true);
 
@@ -24,7 +24,6 @@ async function connectDatabase() {
     serverSelectionTimeoutMS: 10000,
   });
 
-  isConnected = true;
   console.log("Connected to MongoDB");
 }
 
