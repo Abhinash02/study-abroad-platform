@@ -184,6 +184,7 @@ const items = [
   { name: "Programs", path: "/programs", icon: BookOpen },
   { name: "Recommendations", path: "/recommendations", icon: Sparkles },
   { name: "Applications", path: "/applications", icon: FileText },
+    { name: "counselor", path: "/counselor", icon: FileText },
   { name: "Support", path: "/support", icon: LifeBuoy },
   { name: "Profile", path: "/profile", icon: User },
 ];

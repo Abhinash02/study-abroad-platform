@@ -92,6 +92,7 @@ import DashboardPage from "../pages/dashboard/DashboardPage";
 import UniversitiesPage from "../pages/universities/UniversitiesPage";
 import ProgramsPage from "../pages/programs/ProgramsPage";
 import RecommendationsPage from "../pages/recommendations/RecommendationsPage";
+import CounselorApplicationsPage from "../pages/counselor/ApplicationsPage";
 import ApplicationsPage from "../pages/applications/ApplicationsPage";
 import ProfilePage from "../pages/profile/ProfilePage";
 import SupportPage from "../pages/support/SupportPage";
@@ -108,6 +109,10 @@ export default function AppRouter() {
       <Route path="/programs" element={<ProtectedRoute><ProgramsPage /></ProtectedRoute>} />
       <Route path="/recommendations" element={<ProtectedRoute><RecommendationsPage /></ProtectedRoute>} />
       <Route path="/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
+        <Route
+        path="/counselor"
+        element={<ProtectedRoute children={<CounselorApplicationsPage />} />}
+      />
       <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
     </Routes>

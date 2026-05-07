@@ -1,6 +1,8 @@
 const asyncHandler = require("../utils/asyncHandler");
 const Application = require("../models/Application");
 const Program = require("../models/Program");
+const connectDatabase = require("../config/database");
+
 
 const createApplication = asyncHandler(async (req, res) => {
   const application = await Application.create(req.body);
