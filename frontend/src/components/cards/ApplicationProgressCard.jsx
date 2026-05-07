@@ -1,3 +1,5 @@
+
+
 const statusStyles = {
   draft: "bg-slate-100 text-slate-700",
   submitted: "bg-blue-100 text-blue-700",
@@ -10,19 +12,19 @@ const statusStyles = {
 
 export default function ApplicationProgressCard({ application }) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-soft">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-900">
+    <div className="rounded-2xl bg-white p-4 shadow-soft sm:p-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0 flex-1">
+          <h3 className="break-words text-base font-semibold text-slate-900 sm:text-lg">
             {application.program?.title}
           </h3>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 break-words text-xs text-slate-500 sm:text-sm">
             {application.university?.name} • {application.destinationCountry} • Intake {application.intake}
           </p>
         </div>
 
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ${
+          className={`inline-flex w-fit shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${
             statusStyles[application.status] || "bg-slate-100 text-slate-700"
           }`}
         >
@@ -30,27 +32,29 @@ export default function ApplicationProgressCard({ application }) {
         </span>
       </div>
 
-      <div className="mt-6 space-y-5">
+      <div className="mt-5 space-y-4 sm:mt-6 sm:space-y-5">
         {application.timeline?.map((step, index) => {
           const isLast = index === application.timeline.length - 1;
 
           return (
-            <div key={index} className="flex gap-4">
+            <div key={index} className="flex gap-3 sm:gap-4">
               <div className="flex flex-col items-center">
-                <div className="h-3 w-3 rounded-full bg-primary" />
+                <div className="h-3 w-3 shrink-0 rounded-full bg-primary" />
                 {!isLast ? <div className="mt-1 h-full w-px bg-slate-200" /> : null}
               </div>
 
-              <div className="pb-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold capitalize text-slate-900">
+              <div className="min-w-0 flex-1 pb-4">
+                <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
+                  <span className="break-words text-sm font-semibold capitalize text-slate-900">
                     {step.status}
                   </span>
-                  <span className="text-xs text-slate-400">
+                  <span className="break-words text-xs text-slate-400">
                     {new Date(step.changedAt).toLocaleString()}
                   </span>
                 </div>
-                <p className="mt-1 text-sm text-slate-500">{step.note}</p>
+                <p className="mt-1 break-words text-sm leading-6 text-slate-500">
+                  {step.note}
+                </p>
               </div>
             </div>
           );

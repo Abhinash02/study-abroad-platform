@@ -76,16 +76,16 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-center p-6 sm:p-10">
-          <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl ring-1 ring-slate-200">
+        <div className="flex items-center justify-center p-4 sm:p-6 lg:p-10">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-slate-200 sm:p-8">
             <div className="mb-8">
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-teal-700 lg:hidden">
                 <GraduationCap className="h-7 w-7" />
               </div>
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
                 Welcome back
               </h2>
-              <p className="mt-2 text-slate-600">
+              <p className="mt-2 text-sm text-slate-600 sm:text-base">
                 Sign in to continue to your dashboard.
               </p>
             </div>
@@ -147,14 +147,18 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
                 <label className="flex items-center gap-2 text-slate-600">
-                  <input type="checkbox" className="h-4 w-4 rounded border-slate-300" />
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-slate-300"
+                  />
                   Remember me
                 </label>
+
                 <button
                   type="button"
-                  className="font-medium text-teal-700 hover:text-teal-800"
+                  className="text-left font-medium text-teal-700 hover:text-teal-800 sm:text-right"
                 >
                   Forgot password?
                 </button>
@@ -176,8 +180,11 @@ export default function LoginPage() {
             </form>
 
             <div className="mt-6 text-center text-sm text-slate-600">
-              Don’t have an account?{" "}
-              <Link to="/register" className="font-semibold text-teal-700 hover:text-teal-800">
+              {"Don't have an account? "}
+              <Link
+                to="/register"
+                className="font-semibold text-teal-700 hover:text-teal-800"
+              >
                 Create one
               </Link>
             </div>
@@ -186,11 +193,12 @@ export default function LoginPage() {
               <p className="font-medium text-slate-700">Demo credentials Student</p>
               <p className="mt-1">Email: aarav@example.com</p>
               <p>Password: Candidate123!</p>
-              <p></p>
-               <p className="font-medium text-slate-700">Demo credentials counselor</p>
+
+              <p className="mt-4 font-medium text-slate-700">
+                Demo credentials counselor
+              </p>
               <p className="mt-1">Email: priya@example.com</p>
               <p>Password: Candidate123!</p>
-              
             </div>
           </div>
         </div>

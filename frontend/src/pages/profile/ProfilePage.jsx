@@ -1,37 +1,3 @@
-// import AppShell from "../../components/layout/AppShell";
-// import { useAuth } from "../../hooks/useAuth";
-
-// export default function ProfilePage() {
-//   const { user } = useAuth();
-
-//   return (
-//     <AppShell>
-//       <div className="rounded-2xl bg-white p-6 shadow-soft">
-//         <h2 className="text-2xl font-bold text-slate-900">Profile</h2>
-//         <div className="mt-6 grid gap-4 md:grid-cols-2">
-//           <div>
-//             <p className="text-sm text-slate-500">Full Name</p>
-//             <p className="font-medium">{user?.fullName}</p>
-//           </div>
-//           <div>
-//             <p className="text-sm text-slate-500">Email</p>
-//             <p className="font-medium">{user?.email}</p>
-//           </div>
-//           <div>
-//             <p className="text-sm text-slate-500">Role</p>
-//             <p className="font-medium capitalize">{user?.role}</p>
-//           </div>
-//           <div>
-//             <p className="text-sm text-slate-500">Preferred Intake</p>
-//             <p className="font-medium">{user?.preferredIntake || "-"}</p>
-//           </div>
-//         </div>
-//       </div>
-//     </AppShell>
-//   );
-// }
-
-
 import { useEffect, useState } from "react";
 import AppShell from "../../components/layout/AppShell";
 import { useAuth } from "../../hooks/useAuth";
@@ -108,185 +74,192 @@ export default function ProfilePage() {
 
   return (
     <AppShell>
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-2xl bg-white p-6 shadow-soft lg:col-span-1">
-          <h2 className="text-2xl font-bold text-slate-900">Profile Summary</h2>
-          <div className="mt-6 space-y-4 text-sm">
-            <div>
-              <p className="text-slate-500">Full Name</p>
-              <p className="font-medium">{user?.fullName || "-"}</p>
-            </div>
-            <div>
-              <p className="text-slate-500">Email</p>
-              <p className="font-medium">{user?.email || "-"}</p>
-            </div>
-            <div>
-              <p className="text-slate-500">Role</p>
-              <p className="font-medium capitalize">{user?.role || "-"}</p>
-            </div>
-            <div>
-              <p className="text-slate-500">Target Countries</p>
-              <p className="font-medium">
-                {user?.targetCountries?.length ? user.targetCountries.join(", ") : "-"}
-              </p>
-            </div>
-            <div>
-              <p className="text-slate-500">Interested Fields</p>
-              <p className="font-medium">
-                {user?.interestedFields?.length ? user.interestedFields.join(", ") : "-"}
-              </p>
-            </div>
-            <div>
-              <p className="text-slate-500">Preferred Intake</p>
-              <p className="font-medium">{user?.preferredIntake || "-"}</p>
-            </div>
-            <div>
-              <p className="text-slate-500">Budget</p>
-              <p className="font-medium">
-                {user?.maxBudgetUsd ? `$${user.maxBudgetUsd}` : "-"}
-              </p>
-            </div>
-            <div>
-              <p className="text-slate-500">Recommendation Status</p>
-              <span
-                className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                  isProfileReady
-                    ? "bg-emerald-100 text-emerald-700"
-                    : "bg-amber-100 text-amber-700"
-                }`}
-              >
-                {isProfileReady ? "Ready for recommendations" : "Profile incomplete"}
-              </span>
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-3">
+          {/* Profile Summary - Full width on mobile, 1/3 on desktop */}
+          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-soft lg:col-span-1 order-2 lg:order-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6">Profile Summary</h2>
+            <div className="space-y-3 sm:space-y-4 text-sm">
+              <div>
+                <p className="text-slate-500 mb-1">Full Name</p>
+                <p className="font-medium text-base sm:text-sm">{user?.fullName || "-"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Email</p>
+                <p className="font-medium text-base sm:text-sm break-all">{user?.email || "-"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Role</p>
+                <p className="font-medium text-base sm:text-sm capitalize">{user?.role || "-"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Target Countries</p>
+                <p className="font-medium text-base sm:text-sm">
+                  {user?.targetCountries?.length ? user.targetCountries.join(", ") : "-"}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Interested Fields</p>
+                <p className="font-medium text-base sm:text-sm">
+                  {user?.interestedFields?.length ? user.interestedFields.join(", ") : "-"}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Preferred Intake</p>
+                <p className="font-medium text-base sm:text-sm">{user?.preferredIntake || "-"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Budget</p>
+                <p className="font-medium text-base sm:text-sm">
+                  {user?.maxBudgetUsd ? `$${user.maxBudgetUsd.toLocaleString()}` : "-"}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Recommendation Status</p>
+                <span
+                  className={`inline-flex rounded-full px-3 py-1 text-xs sm:text-sm font-semibold ${
+                    isProfileReady
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-amber-100 text-amber-700"
+                  }`}
+                >
+                  {isProfileReady ? "Ready for recommendations" : "Profile incomplete"}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="rounded-2xl bg-white p-6 shadow-soft lg:col-span-2">
-          <h2 className="text-2xl font-bold text-slate-900">Edit Profile</h2>
-          <p className="mt-2 text-sm text-slate-500">
-            Add your country, field, intake, and budget preferences to unlock recommendations.
-          </p>
+          {/* Edit Profile - Full width on mobile, 2/3 on desktop */}
+          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-soft lg:col-span-2 order-1 lg:order-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-4">Edit Profile</h2>
+            <p className="text-sm text-slate-500 mb-4 sm:mb-6 leading-relaxed">
+              Add your country, field, intake, and budget preferences to unlock recommendations.
+            </p>
 
-          <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Full Name
-              </label>
-              <input
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-                placeholder="Enter your full name"
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="sm:col-span-2">
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Full Name
+                </label>
+                <input
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Enter your full name"
+                />
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Target Countries
-              </label>
-              <input
-                name="targetCountries"
-                value={formData.targetCountries}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-                placeholder="Canada, Australia, UK"
-              />
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Target Countries
+                </label>
+                <input
+                  name="targetCountries"
+                  value={formData.targetCountries}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Canada, Australia, UK"
+                />
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Interested Fields
-              </label>
-              <input
-                name="interestedFields"
-                value={formData.interestedFields}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-                placeholder="Computer Science, Business"
-              />
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Interested Fields
+                </label>
+                <input
+                  name="interestedFields"
+                  value={formData.interestedFields}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Computer Science, Business"
+                />
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Preferred Intake
-              </label>
-              <select
-                name="preferredIntake"
-                value={formData.preferredIntake}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-              >
-                <option value="">Select intake</option>
-                <option value="January">January</option>
-                <option value="May">May</option>
-                <option value="September">September</option>
-              </select>
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Preferred Intake
+                </label>
+                <select
+                  name="preferredIntake"
+                  value={formData.preferredIntake}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
+                >
+                  <option value="">Select intake</option>
+                  <option value="January">January</option>
+                  <option value="May">May</option>
+                  <option value="September">September</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Max Budget (USD)
-              </label>
-              <input
-                name="maxBudgetUsd"
-                type="number"
-                value={formData.maxBudgetUsd}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-                placeholder="25000"
-              />
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Max Budget (USD)
+                </label>
+                <input
+                  name="maxBudgetUsd"
+                  type="number"
+                  value={formData.maxBudgetUsd}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="25000"
+                />
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                English Test
-              </label>
-              <select
-                name="englishTestExam"
-                value={formData.englishTestExam}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-              >
-                <option value="IELTS">IELTS</option>
-                <option value="TOEFL">TOEFL</option>
-                <option value="PTE">PTE</option>
-              </select>
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  English Test
+                </label>
+                <select
+                  name="englishTestExam"
+                  value={formData.englishTestExam}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
+                >
+                  <option value="IELTS">IELTS</option>
+                  <option value="TOEFL">TOEFL</option>
+                  <option value="PTE">PTE</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Test Score
-              </label>
-              <input
-                name="englishTestScore"
-                type="number"
-                step="0.1"
-                value={formData.englishTestScore}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3"
-                placeholder="6.5"
-              />
-            </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Test Score
+                </label>
+                <input
+                  name="englishTestScore"
+                  type="number"
+                  step="0.1"
+                  value={formData.englishTestScore}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="6.5"
+                />
+              </div>
 
-            {message ? (
-              <p className="md:col-span-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                {message}
-              </p>
-            ) : null}
+              {message ? (
+                <p className="sm:col-span-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  {message}
+                </p>
+              ) : null}
 
-            {error ? (
-              <p className="md:col-span-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
-                {error}
-              </p>
-            ) : null}
+              {error ? (
+                <p className="sm:col-span-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </p>
+              ) : null}
 
-            <div className="md:col-span-2">
-              <button className="rounded-xl border border-teal-700 bg-primary px-5 py-3 text-sm font-semibold text-black shadow-sm transition hover:bg-teal-800">
-  Save Profile
-</button>
-            </div>
-          </form>
+              <div className="sm:col-span-2">
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto rounded-xl border border-teal-700 bg-primary px-6 py-3 text-sm font-semibold text-black shadow-sm transition-all hover:bg-teal-600 hover:border-teal-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:ml-auto"
+                >
+                  Save Profile
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </AppShell>

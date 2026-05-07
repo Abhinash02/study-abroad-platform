@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 export default function SupportRequestCard({
@@ -23,37 +24,41 @@ export default function SupportRequestCard({
   const canEdit = isOwner && request.status !== "resolved";
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-900">{request.subject}</h3>
-          <p className="text-sm text-slate-500">
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0 flex-1">
+          <h3 className="break-words text-base font-semibold text-slate-900 sm:text-lg">
+            {request.subject}
+          </h3>
+          <p className="break-words text-sm text-slate-500">
             {request.category} • {request.student?.fullName}
           </p>
         </div>
-        <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+        <span className="inline-flex w-fit shrink-0 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
           {request.status}
         </span>
       </div>
 
-      <p className="mt-4 text-sm text-slate-700">{request.description}</p>
+      <p className="mt-4 break-words text-sm text-slate-700">{request.description}</p>
 
       {request.counselorFeedback ? (
-        <div className="mt-4 rounded-xl bg-emerald-50 p-4">
+        <div className="mt-4 rounded-xl bg-emerald-50 p-3 sm:p-4">
           <p className="text-xs font-semibold uppercase text-emerald-700">
             Counselor feedback
           </p>
-          <p className="mt-1 text-sm text-emerald-900">{request.counselorFeedback}</p>
+          <p className="mt-1 break-words text-sm text-emerald-900">
+            {request.counselorFeedback}
+          </p>
         </div>
       ) : null}
 
       <div className="mt-4 space-y-3">
         {request.messages?.map((item, index) => (
           <div key={index} className="rounded-xl bg-slate-50 p-3 text-sm">
-            <p className="font-medium text-slate-800">
+            <p className="break-words font-medium text-slate-800">
               {item.sender?.fullName || item.senderRole} ({item.senderRole})
             </p>
-            <p className="mt-1 text-slate-600">{item.message}</p>
+            <p className="mt-1 break-words text-slate-600">{item.message}</p>
           </div>
         ))}
       </div>
@@ -63,18 +68,18 @@ export default function SupportRequestCard({
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Write a reply..."
-          className="w-full rounded-xl border border-slate-200 px-4 py-3"
+          className="w-full rounded-xl border border-slate-200 px-3 py-3 text-sm sm:px-4"
           rows={3}
         />
-    <button
-  onClick={() => {
-    onReply(request._id, message);
-    setMessage("");
-  }}
-  className="mt-3 rounded-xl bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-teal-700"
->
-  Send Reply
-</button>
+        <button
+          onClick={() => {
+            onReply(request._id, message);
+            setMessage("");
+          }}
+          className="mt-3 w-full rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-teal-700 sm:w-auto"
+        >
+          Send Reply
+        </button>
       </div>
 
       {canEdit ? (
@@ -86,14 +91,14 @@ export default function SupportRequestCard({
           <input
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3"
+            className="mt-3 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm sm:px-4"
             placeholder="Subject"
           />
 
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3"
+            className="mt-3 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm sm:px-4"
           >
             <option value="general">general</option>
             <option value="admission">admission</option>
@@ -105,17 +110,17 @@ export default function SupportRequestCard({
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3"
+            className="mt-3 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm sm:px-4"
             rows={4}
             placeholder="Describe your issue"
           />
 
-          <div className="mt-3 flex gap-3">
+          <div className="mt-3 flex flex-col gap-3 sm:flex-row">
             <button
               onClick={() =>
                 onStudentUpdate(request._id, { subject, description, category })
               }
-              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
+              className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white sm:w-auto"
             >
               Update Request
             </button>
@@ -123,7 +128,7 @@ export default function SupportRequestCard({
             {canDelete ? (
               <button
                 onClick={() => onStudentDelete(request._id)}
-                className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white"
+                className="w-full rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white sm:w-auto"
               >
                 Delete Request
               </button>
@@ -138,18 +143,10 @@ export default function SupportRequestCard({
             Update counselor feedback
           </h4>
 
-          {/* <textarea
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Write counselor feedback"
-            className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3"
-            rows={3}
-          /> */}
-
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3"
+            className="mt-3 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm sm:px-4"
           >
             <option value="open">open</option>
             <option value="in-progress">in-progress</option>
@@ -163,7 +160,7 @@ export default function SupportRequestCard({
                 status,
               })
             }
-            className="mt-3 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
+            className="mt-3 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white sm:w-auto"
           >
             Save Feedback
           </button>

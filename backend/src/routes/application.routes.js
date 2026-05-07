@@ -8,7 +8,7 @@ const { createApplicationValidation, applyProgramValidation, updateApplicationVa
 // Manual full application form
 router.post("/", createApplicationValidation, applicationController.createApplication);
 
-// Student panel → counselor panel apply
+// Student panel counselor panel apply
 router.post("/apply", applyProgramValidation, applicationController.applyProgram);
 
 // List and single item
