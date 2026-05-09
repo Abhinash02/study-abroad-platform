@@ -5,7 +5,6 @@ This project is a full‑stack MERN study‑abroad platform with a secure JWT‑
 **MERN-stack study abroad application platform built with React, Express, MongoDB. Features student/counselor dashboards, application tracking, program discovery, and recommendation system.**
 
 ## Features
-
 **Student Dashboard:**
 - Program discovery & search
 - University comparisons
@@ -29,7 +28,6 @@ This project is a full‑stack MERN study‑abroad platform with a secure JWT‑
 - MongoDB with Mongoose ORM
 
 ## Live Demo
-
 - **Frontend**: [https://study-abroad-platform-seven.vercel.app](https://study-abroad-platform-seven.vercel.app)
 - **Backend API**: [https://study-abroad-platform-mm2h.onrender.com/api/health](https://study-abroad-platform-mm2h.onrender.com/api/health)
 
@@ -44,8 +42,7 @@ Email: priya@example.com
 Password: Candidate123!
 ```
 
-## 🛠 Tech Stack
-
+## Tech Stack
 ```
 Frontend: React 18 + Vite + Tailwind CSS + React Router + Lucide Icons
 Backend: Node.js + Express.js + MongoDB + Mongoose + JWT
@@ -54,8 +51,7 @@ Auth: JWT tokens with role-based access control
 Styling: Tailwind CSS (fully responsive)
 ```
 
-## 📁 Project Structure
-
+## Project Structure
 ```
 waygood-study-abroad/
 ├── frontend/                 # React + Vite + Tailwind
@@ -76,8 +72,7 @@ waygood-study-abroad/
 │   └── server.js
 └── README.md
 ```
-
-## 🏃‍♂️ Setup & Run Instructions
+## Setup & Run Instructions
 
 ### Prerequisites
 - Node.js 18+
@@ -85,7 +80,6 @@ waygood-study-abroad/
 - GitHub account
 
 ### 1. Clone & Install
-
 ```bash
 git clone <your-github-repo-url>
 cd waygood-study-abroad
@@ -102,7 +96,6 @@ cd ..
 ```
 
 ### 2. Environment Variables
-
 #### Backend `.env`
 ```env
 PORT=4000
@@ -118,7 +111,6 @@ VITE_API_URL=Backend_Url
 ```
 
 ### 3. Run Locally
-
 ```bash
 # Terminal 1 - Backend
 cd backend
@@ -128,7 +120,6 @@ npm run dev
 cd frontend
 npm run dev
 ```
-
 **Local URLs:**
 - Frontend: http://localhost:5173
 - Backend: http://localhost:4000
@@ -139,8 +130,7 @@ npm run dev
 3. Whitelist your IP (0.0.0.0/0 for testing)
 4. Copy connection string to `MONGODB_URI`
 
-## ☁️ Deployment
-
+## Deployment
 ### Frontend (Vercel)
 1. Push `frontend/` to GitHub
 2. Import to [Vercel](https://vercel.com)
@@ -151,7 +141,6 @@ npm run dev
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
 ```
-
 ### Backend (Render)
 1. Push `backend/` to GitHub
 2. Create [Render Web Service](https://render.com)
@@ -161,7 +150,6 @@ npm run dev
    - Env vars: Copy from `.env`
 
 ## Responsive Design
-
  **Mobile-first approach** (phones, tablets, laptops, desktop)
     Tailwind responsive utilities (`sm:`, `md:`, `lg:`, `xl:`)
     Flexible cards & layouts
@@ -169,14 +157,12 @@ npm run dev
     Proper text wrapping & spacing
 
 ## Authentication
-
 - **Student** & **Counselor** role-based access
 - JWT tokens (7-day expiry)
 - Protected routes (`/dashboard`, `/applications`)
 - Secure password requirements
 
 ## Troubleshooting
-
 **CORS Error:**
 ```
 CLIENT_URL=https://your-vercel-app.vercel.app
@@ -195,7 +181,6 @@ Add to backend `.env` and redeploy.
 - Verify `/api/auth/register` & `/api/auth/login` endpoints
 
 ##  API Endpoints
-
 ```
 Auth:
 POST /api/auth/register
@@ -216,7 +201,6 @@ GET /api/support
 ```
 
 ## UI Components
-
 All components are **fully responsive**:
 - `ApplicationCard`
 - `ProgramCard` 
@@ -226,7 +210,6 @@ All components are **fully responsive**:
 - Login/Register pages
 
 ##  Future Enhancements
-
 - [ ] File upload (documents, transcripts)
 - [ ] Email notifications
 - [ ] Real-time chat
@@ -235,19 +218,13 @@ All components are **fully responsive**:
 - [ ] Payment integration
 
 ##  Contributing
-
 1. Fork repository
 2. Create feature branch
 3. Commit changes
 4. Push & create Pull Request
 
 ##  License
-
-This project is MIT licensed - see [LICENSE](LICENSE) file.
-
-***
-
-**Built with ❤️ for study abroad students & counselors**
+**Built with Love for study abroad students & counselors**
 
 **GitHub:** https://github.com/Abhinash02/study-abroad-platform.git 
 **Live:** https://study-abroad-platform-seven.vercel.app/login
